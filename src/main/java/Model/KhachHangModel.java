@@ -68,4 +68,20 @@ public class KhachHangModel {
     public void setKhCmnd(String khCmnd) {
         this.khCmnd = khCmnd;
     }
+
+    @Override
+    public String toString() {
+        return id +"#" + khTen +
+                "#" + khSdt +
+                "#" + khNgaysinh +
+                "#" + khEmail +
+                "#" + khCmnd;
+    }
+    public static String Header(){
+        return "Id" +"#" + "Tên khách hàng" +
+                "#" + "Số điện thoại" +
+                "#" + "Ngày sinh" +
+                "#" + "Email" +
+                "#" + "CMND";
+    }
 }

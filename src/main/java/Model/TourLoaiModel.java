@@ -31,4 +31,11 @@ public class TourLoaiModel {
     public void setLoaiMota(String loaiMota) {
         this.loaiMota = loaiMota;
     }
+
+    @Override
+    public String toString() {
+        return id +
+                "#" + loaiTen +
+                "#" + loaiMota;
+    }
 }
