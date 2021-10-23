@@ -1,9 +1,7 @@
 package Common;
 
-import Model.KhachHangModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -12,15 +10,20 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 public class BaseRequest<T>{
     String url;
     public static final String FAIL = "FAIL";
     private final Class<T> type;
-    public BaseRequest(String url,Class<T> type) {
+    private final Class<T[]> ListType;
+    private static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+    public BaseRequest(String url, Class<T> type,Class<T[]> listType) {
         this.type = type;
         this.url = url;
+        this.ListType = listType;
     }
     public List<T> get(){
         ClientConfig clientConfig = new DefaultClientConfig();
@@ -35,29 +38,44 @@ public class BaseRequest<T>{
             System.err.println("Error: "+error);
             return null;
         }
-
         String data = response.getEntity(String.class);
-        return new Gson().fromJson(data, new TypeToken<List<KhachHangModel>>(){}.getType());
+        T[] list = gson.fromJson(data,ListType);
+        List<T> result = Arrays.asList(list);
+        if(!data.equals(gson.toJson(list))){
+            try {
+                throw new RequestMappingException("Cánh báo Lỗi mapping " + ListType.getSimpleName());
+            } catch (RequestMappingException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
-    public T get(int id){
+    public T get(int id) {
         ClientConfig clientConfig = new DefaultClientConfig();
+
         Client client = Client.create(clientConfig);
 
         WebResource webResource = client.resource(url+"/"+id);
 
         Builder builder = webResource.accept(MediaType.APPLICATION_JSON) //
                 .header("content-type", MediaType.APPLICATION_JSON);
-
         ClientResponse response = builder.get(ClientResponse.class);
         if (response.getStatus() != 200) {
-            System.out.println("Failed with HTTP Error code: " + response.getStatus());
+            System.err.println("Failed with HTTP Error code: " + response.getStatus());
             String error= response.getEntity(String.class);
-            System.out.println("Error: "+error);
+            System.err.println("Error: "+error);
             return null;
         }
         String data = response.getEntity(String.class);
-        System.out.println("ABS"+data);
-        return new Gson().fromJson(data,type);
+        T result = gson.fromJson(data,type);
+        if (!gson.toJson(result).equals(data)) {
+            try {
+                throw new RequestMappingException("Cánh báo Lỗi mapping " + type.getSimpleName());
+            } catch (RequestMappingException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
     public boolean post(T model){
         Client client = Client.create();
@@ -66,9 +84,9 @@ public class BaseRequest<T>{
         String data = gson.toJson(model);
         ClientResponse response = webResource.type("application/json").post(ClientResponse.class, data);
         if (response.getStatus() != 200) {
-            System.out.println("Failed : HTTP error code : " + response.getStatus());
+            System.err.println("Failed : HTTP error code : " + response.getStatus());
             String error = response.getEntity(String.class);
-            System.out.println("Error: " + error);
+            System.err.println("Error: " + error);
             return false;
         }
         return true;
@@ -80,9 +98,9 @@ public class BaseRequest<T>{
         String data = gson.toJson(model);
         ClientResponse response = webResource.type("application/json").put(ClientResponse.class, data);
         if (response.getStatus() != 200) {
-            System.out.println("Failed : HTTP error code : " + response.getStatus());
+            System.err.println("Failed : HTTP error code : " + response.getStatus());
             String error = response.getEntity(String.class);
-            System.out.println("Error: " + error);
+            System.err.println("Error: " + error);
             return false;
         }
         return true;
@@ -92,11 +110,12 @@ public class BaseRequest<T>{
         WebResource webResource = client.resource(url+"/"+id);
         ClientResponse response = webResource.type("application/json").delete(ClientResponse.class);
         if (response.getStatus() != 200) {
-            System.out.println("Failed : HTTP error code : " + response.getStatus());
+            System.err.println("Failed : HTTP error code : " + response.getStatus());
             String error = response.getEntity(String.class);
-            System.out.println("Error: " + error);
+            System.err.println("Error: " + error);
             return false;
         }
         return true;
     }
+
 }

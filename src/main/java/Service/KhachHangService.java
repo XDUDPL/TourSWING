@@ -3,17 +3,16 @@ package Service;
 
 import Common.BaseRequest;
 import Model.KhachHangModel;
+import Model.TourLoaiModel;
+
+import java.util.List;
 
 public class KhachHangService {
     private static String url = "http://localhost:8080/api/khachhangs";
 
     public static void main(String[] args) {
-        BaseRequest<KhachHangModel> request = new BaseRequest<>(url,KhachHangModel.class);
-        if(request.delete(10)){
-            System.out.println("Được");
-        }else{
-            System.out.println("Không");
-        }
-        System.out.println(request.get().size());
+        BaseRequest<TourLoaiModel> request = new BaseRequest<>(url,TourLoaiModel.class,TourLoaiModel[].class);
+        List<TourLoaiModel> list = request.get();
+        System.out.println(request.get(6));
     }
 }

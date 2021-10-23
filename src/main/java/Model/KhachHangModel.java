@@ -2,7 +2,7 @@ package Model;
 
 import java.util.Date;
 public class KhachHangModel {
-    private Integer Id;
+    private Integer id;
     private String khTen;
     private String khSdt;
     public Date khNgaysinh;
@@ -13,7 +13,7 @@ public class KhachHangModel {
     }
 
     public KhachHangModel(Integer id, String khTen, String khSdt, Date khNgaysinh, String khEmail, String khCmnd) {
-        Id = id;
+        this.id = id;
         this.khTen = khTen;
         this.khSdt = khSdt;
         this.khNgaysinh = khNgaysinh;
@@ -22,11 +22,11 @@ public class KhachHangModel {
     }
 
     public Integer getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Integer id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getKhTen() {
