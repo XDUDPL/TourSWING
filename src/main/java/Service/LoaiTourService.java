@@ -1,13 +1,12 @@
 package Service;
 
 import Common.BaseRequest;
-import Model.KhachHangModel;
 import Model.TourLoaiModel;
 
 import java.util.List;
 
 public class LoaiTourService implements Service{
-    private static String url = "http://localhost:8080/api/tour_loai";
+    private static String url = "http://localhost:8080/api/tourloai";
     private static BaseRequest<TourLoaiModel> instance;
     private static List<TourLoaiModel> data;
 

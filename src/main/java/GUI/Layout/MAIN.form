@@ -61,7 +61,7 @@
               <text value="Khách Hàng"/>
             </properties>
           </component>
-          <component id="5f1b6" class="javax.swing.JButton" binding="loaiTourButton">
+          <component id="5a878" class="javax.swing.JButton" binding="LoaiTour">
             <constraints/>
             <properties>
               <maximumSize width="100" height="30"/>
@@ -69,6 +69,16 @@
               <opaque value="false"/>
               <preferredSize width="100" height="30"/>
               <text value="Loại Tour"/>
+            </properties>
+          </component>
+          <component id="5f1b6" class="javax.swing.JButton" binding="Tour">
+            <constraints/>
+            <properties>
+              <maximumSize width="100" height="30"/>
+              <minimumSize width="100" height="30"/>
+              <opaque value="false"/>
+              <preferredSize width="100" height="30"/>
+              <text value="Tour"/>
             </properties>
           </component>
         </children>

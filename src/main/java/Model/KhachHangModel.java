@@ -78,7 +78,8 @@ public class KhachHangModel {
                 "#" + khCmnd;
     }
     public static String Header(){
-        return "Id" +"#" + "Tên khách hàng" +
+        return "Id" +
+                "#" + "Tên khách hàng" +
                 "#" + "Số điện thoại" +
                 "#" + "Ngày sinh" +
                 "#" + "Email" +

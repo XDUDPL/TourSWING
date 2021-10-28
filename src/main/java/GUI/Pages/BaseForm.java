@@ -33,6 +33,7 @@ public  class BaseForm <T> {
         };
         String headers = Header.getHeader(type.getSimpleName());
         tbModel.setColumnIdentifiers(headers.split("#"));
+        tb.setRowHeight(50);
         tb.setModel(tbModel);
     }
     public void setData(){

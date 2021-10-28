@@ -1,17 +1,15 @@
 package GUI.Layout;
 
 import GUI.Pages.BaseForm;
-import GUI.Pages.Hello;
-import GUI.Pages.Main1;
 import Model.KhachHangModel;
 import Model.TourLoaiModel;
+import Model.TourModel;
 import Service.KhachHangService;
 import Service.LoaiTourService;
+import Service.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class MAIN extends JFrame{
     private JPanel main;
@@ -21,7 +19,8 @@ public class MAIN extends JFrame{
     private JButton button1;
     private JButton button2;
     private JButton button3;
-    private JButton loaiTourButton;
+    private JButton Tour;
+    private JButton LoaiTour;
 
     public MAIN(){
         //Side Menu
@@ -34,9 +33,15 @@ public class MAIN extends JFrame{
             revalidate();
             repaint();
         });
-        loaiTourButton.addActionListener((e)->{
+        LoaiTour.addActionListener((e)->{
             Content.removeAll();
             Content.add(new BaseForm<TourLoaiModel>(TourLoaiModel.class, new LoaiTourService()).getMain(), BorderLayout.CENTER);
+            revalidate();
+            repaint();
+        });
+        Tour.addActionListener((e)->{
+            Content.removeAll();
+            Content.add(new BaseForm<TourModel>(TourModel.class, new TourService()).getMain(),BorderLayout.CENTER);
             revalidate();
             repaint();
         });
